@@ -6,7 +6,7 @@ import Main from '../pages/Main';
 import Category from 'pages/Category';
 import Detail from 'pages/Detail';
 import Write from 'pages/Write';
-import Mypage from 'pages/Mypage';
+import MyPage from 'pages/MyPage';
 
 const Router = () => {
   return (
@@ -18,7 +18,7 @@ const Router = () => {
         <Route path="/category" element={<Category />} />
         <Route path="/detail/:postId" element={<Detail />} />
         <Route path="/write" element={<Write />} />
-        <Route path="/mypage" element={<Mypage />} />
+        <Route path="/mypage" element={<MyPage />} />
       </Routes>
     </BrowserRouter>
   );
