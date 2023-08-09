@@ -66,7 +66,7 @@ const Like = () => {
     } else if (isLiked) {
       const updateLikesUser = {
         ...posts[0],
-        likes: [...posts[0].likes, posts[0].likes.pop(posts[0].userId)]
+        likes: [...posts[0].likes]
       };
       setIsLiked(false);
       updateLikesMutation.mutate(updateLikesUser);
