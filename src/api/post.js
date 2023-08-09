@@ -12,16 +12,20 @@ const getDetail = async (id) => {
 
 const deletePost = async (id) => {
   await supabaseClient.from('posts').delete().eq('id', id);
-  //   const { error } = await supabase.from('posts').delete().eq('id', `${id}`);
-  //   return error;
 };
 
 const updatePost = async (post) => {
   await supabaseClient.from('posts').update(post).eq('id', post.id);
 };
 
+const getLikes = async (id) => {
+  // const { data } = await supabaseClient.from('likes').select().eq('postId', id);
+  // const { data } = await supabaseClient.from('posts').select('likes').eq('id', id);
+  // return data;
+};
+
 const updateLikes = async (post) => {
   await supabaseClient.from('posts').update(post).eq('id', post.id);
 };
 
-export { getPosts, getDetail, deletePost, updatePost, updateLikes };
+export { getPosts, getDetail, deletePost, updatePost, getLikes, updateLikes };

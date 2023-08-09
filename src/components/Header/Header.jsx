@@ -6,7 +6,7 @@ import LogoutUtil from './LogoutUtil';
 const Header = () => {
   // 조회
   const currentUser = useUserStore((state) => state.currentUser);
-  //   console.log('주스탠드 => ', currentUser);
+  // console.log('주스탠드 => ', currentUser);
 
   return (
     <div>

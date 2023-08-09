@@ -11,7 +11,7 @@ import Write from 'pages/Write';
 import AuthRoute from './AuthRoute';
 import Layout from './Layout';
 import { useUserStore } from 'store';
-import Mypage from 'pages/Mypage';
+import Mypage from 'pages/MyPage';
 
 const Router = () => {
   const { addCurrentUser, deleteCurrentUser } = useUserStore((state) => state);
