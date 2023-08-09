@@ -41,26 +41,6 @@ const Profile = () => {
     }
   };
 
-  // const nicknameUpdateBtn = async (member) => {
-  //   if (!nickname) return alert('닉네임을 입력해주세요');
-  //   if (!isUpdateProfile) {
-  //     setIsUpdateProfile(true);
-  //   } else {
-  //     const updateNickname = {
-  //       ...member,
-  //       nickname
-  //     };
-
-  //     try {
-  //       await updateMutation.mutate(updateNickname);
-  //       setIsUpdateProfile(false);
-  //       alert('닉네임 수정 완료');
-  //     } catch (error) {
-  //       console.error('닉네임 변경 실패', error);
-  //     }
-  //   }
-  // };
-
   if (isLoading) {
     return <div>Loading...</div>;
   }
