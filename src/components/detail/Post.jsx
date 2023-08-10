@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { getDetail } from 'api/post';
-import Share from './Share';
-import Likes from './Likes';
 import usePost from 'hooks/usePost';
 import useInput from 'hooks/useInput';
+import Share from './Share';
+import Likes from './Likes';
 
 const Post = () => {
   const params = useParams();
