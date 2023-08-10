@@ -1,35 +1,21 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { deletePost, getDetail, getPosts, updatePost } from 'api/post';
+import { useQuery } from 'react-query';
+import { getDetail } from 'api/post';
 import Share from './Share';
 import Likes from './Likes';
+import usePost from 'hooks/usePost';
+import useInput from 'hooks/useInput';
 
 const Post = () => {
   const params = useParams();
 
   const { data: posts, isLoading, isError } = useQuery('posts', () => getDetail(params.postId));
+  const { deleteMutation, updateMutation } = usePost();
 
-  const queryQlient = useQueryClient();
-
-  const deleteMutation = useMutation(deletePost, {
-    onSuccess: () => {
-      queryQlient.invalidateQueries('posts');
-    }
-  });
-
-  const updateMutation = useMutation(updatePost, {
-    onSuccess: () => {
-      queryQlient.invalidateQueries('posts');
-    }
-  });
-
-  const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
+  const [title, handleOnChangeTitle, setTitle] = useInput();
+  const [body, handleOnChangeBody, setBody] = useInput();
   const [isEdit, setIsEdit] = useState(false);
-
-  const handleOnChangeTitle = (e) => setTitle(e.target.value);
-  const handleOnChangeBody = (e) => setBody(e.target.value);
 
   const handleDeletePost = (id) => {
     deleteMutation.mutate(id);
