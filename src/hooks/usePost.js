@@ -1,14 +1,20 @@
 import React from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { addPost, deletePost, updateLikes, updatePost } from 'api/post';
+import { useNavigate } from 'react-router-dom';
 
 const usePost = () => {
+  const navigate = useNavigate();
+
   const queryClient = useQueryClient();
 
   const addMutation = useMutation(addPost, {
     onSuccess: () => {
+      alert('글이 작성되었습니다');
       queryClient.invalidateQueries('posts');
-    }
+      navigate(-1);
+    },
+    refetchOnWindowFocus: false
   });
 
   const deleteMutation = useMutation(deletePost, {
