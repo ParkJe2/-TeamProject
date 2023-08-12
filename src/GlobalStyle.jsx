@@ -17,6 +17,4 @@ body {
 }
 `;
 
-// const CustomComponent = styled.div``;
-
 export default GlobalStyle;

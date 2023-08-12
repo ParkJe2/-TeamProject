@@ -4,8 +4,8 @@ import { styled } from 'styled-components';
 
 export const St = {
   ShareDropdown: styled(Dropdown)`
-    display: flex;
-    flex-direction: row;
+    /* display: inline-flex;
+    flex-direction: row; */
   `,
 
   ShareIcon: styled(ShareAltOutlined)`
@@ -18,17 +18,15 @@ export const St = {
     border-radius: 50%;
   `,
 
-  LikesContainer: styled.div``,
-
   LikesButtonBox: styled.div`
-    width: 45px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    /* background-color: #cfcfcfdb; */
-    border-radius: 10px;
-    margin-left: 20px;
-    /* padding: 10px 23px; */
+    margin-right: 25px;
+  `,
+
+  LikesCount: styled.div`
+    margin-top: 7px;
   `
 };

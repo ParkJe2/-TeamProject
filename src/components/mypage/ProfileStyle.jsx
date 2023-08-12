@@ -3,17 +3,17 @@ import { styled } from 'styled-components';
 export const St = {
   PageContainer: styled.div`
     width: 100%;
-    margin-top: 1.5rem;
     display: flex;
+    margin-top: 1.5rem;
   `,
   ProfileWarp: styled.div`
     width: 30%;
-    height: 100%;
     float: left;
-    box-sizing: border-box;
+    height: 100%;
     text-align: center;
     display: inline-grid;
     align-content: center;
+    box-sizing: border-box;
   `,
 
   MyPostWarp: styled.div`
@@ -23,13 +23,13 @@ export const St = {
   `,
 
   ProfileImageBox: styled.div`
+    margin: auto;
     width: 180px;
     height: 180px;
-    border-radius: 100%;
     overflow: hidden;
-    background-color: #d9d9d9;
-    margin: auto;
     margin-bottom: 30px;
+    border-radius: 100%;
+    background-color: #d9d9d9;
   `,
   ProfileImage: styled.img`
     width: 100%;
@@ -45,13 +45,13 @@ export const St = {
 
   ContentsBox: styled.div`
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
   `,
   ContentsForm: styled.form`
+    gap: 18px;
     display: flex;
     flex-direction: column;
-    gap: 18px;
   `,
 
   ContentsLabel: styled.label`
@@ -62,24 +62,24 @@ export const St = {
     width: 160px;
     height: 30px;
     outline: none;
-    font-size: 12px;
-    padding-left: 10px;
+    font-size: 13px;
     margin-left: 10px;
-    border: 1px solid gray;
     border-radius: 5px;
+    padding-left: 10px;
+    border: 1px solid gray;
     background-color: white;
   `,
 
   NicknameChangeBtn: styled.button`
     width: 90px;
     height: 30px;
-    outline: none;
-    border: none;
-    color: white;
     margin: auto;
+    border: none;
+    outline: none;
+    color: white;
     font-size: 12px;
-    font-weight: 600;
     cursor: pointer;
+    font-weight: 600;
     border-radius: 15px;
     background-color: #e24c4b;
   `

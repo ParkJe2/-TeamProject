@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { getComments, deleteComment, updateComment, AddComment } from 'api/comment';
-import { useUserStore } from 'store';
 import { useParams } from 'react-router-dom/dist';
+import { useUserStore } from 'store';
 import dayjs from 'dayjs';
 import { St } from './CommentsStyle';
 
@@ -19,12 +19,6 @@ const Comments = () => {
     }
   });
 
-  const updateMutation = useMutation(updateComment, {
-    onSuccess: () => {
-      queryQlient.invalidateQueries('comments');
-    }
-  });
-
   const insertMutation = useMutation(AddComment, {
     onSuccess: () => {
       queryQlient.invalidateQueries('comments');
@@ -34,7 +28,11 @@ const Comments = () => {
   const [body, setBody] = useState('');
 
   const handleDeleteComment = (id) => {
-    deleteMutation.mutate(id);
+    if (window.confirm('댓글을 삭제하시겠습니까?')) {
+      deleteMutation.mutate(id);
+    } else {
+      alert('댓글 삭제를 취소합니다.');
+    }
   };
 
   const handleSubmitComment = (e) => {
@@ -65,7 +63,9 @@ const Comments = () => {
 
   return (
     <div>
-      <St.CommentsTitle>댓글</St.CommentsTitle>
+      <St.CommentsTitle>
+        {comments.filter((comment) => comment.postId === params.postId).length}명이 건배사를 외치고 있습니다!
+      </St.CommentsTitle>
       <St.CommentsAddForm onSubmit={handleSubmitComment}>
         <St.CommentsTextarea
           type="text"
@@ -80,6 +80,7 @@ const Comments = () => {
       <div>
         {comments
           .filter((comment) => comment.postId === params.postId)
+          .sort((a, b) => dayjs(b.created_at) - dayjs(a.created_at))
           .map((comment) => (
             <St.CommentsBox key={comment.id}>
               <St.CommentsUserInfoBox>

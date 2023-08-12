@@ -24,7 +24,7 @@ const Header = () => {
 
   return (
     <St.HeaderContainer>
-      <St.HeaderImg src="/logo.png" onClick={clickLogo} />
+      <St.HeaderLogoImg src="/logo.png" onClick={clickLogo} />
       <St.CategoryWrapper>
         <St.CategoryLink to="/category/술자리 팁">술자리 팁</St.CategoryLink>
         <St.CategoryLink to="/category/건배사">건배사</St.CategoryLink>

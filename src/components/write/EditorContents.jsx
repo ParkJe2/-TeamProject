@@ -1,5 +1,4 @@
 import React, { useRef } from 'react';
-import useInput from 'hooks/useInput';
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import colorSyntax from '@toast-ui/editor-plugin-color-syntax';

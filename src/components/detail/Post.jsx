@@ -25,11 +25,15 @@ const Post = () => {
 
   const [title, onChangeTitle, setTitle] = useInput();
   const [body, onChangeBody, setBody] = useInput();
-  // const [category, onChangeCategory, setCategory] = useInput();
+  const [category, onChangeCategory, setCategory] = useInput();
   const [isEdit, setIsEdit] = useState(false);
 
   const handleDeletePost = (id) => {
-    deleteMutation.mutate(id);
+    if (window.confirm('글을 삭제하시겠습니까?')) {
+      deleteMutation.mutate(id);
+    } else {
+      alert('글 삭제를 취소합니다.');
+    }
   };
 
   const handleUpdatePost = (post) => {
@@ -37,14 +41,25 @@ const Post = () => {
       setIsEdit(true);
       setTitle(post.title);
       setBody(post.body);
+      setCategory(post.category);
     } else {
+      if (!title || !body) {
+        return alert('내용을 입력해주세요');
+      } else if (!category) {
+        return alert('카테고리를 선택해주세요');
+      }
+
       const editedPost = {
         ...post,
         title,
-        body
+        body,
+        category
       };
+
       updateMutation.mutate(editedPost);
       setIsEdit(false);
+
+      post.body = body;
     }
   };
 
@@ -58,48 +73,56 @@ const Post = () => {
 
   return (
     <St.PostContainer>
-      {posts.map((post) => {
-        return (
-          <div key={post.id}>
-            {currentUser?.uid === post.userId && (
-              <St.PostButtonBox>
-                <St.PostButton onClick={() => handleUpdatePost(post)}>{isEdit ? '저장' : '수정'}</St.PostButton>
-                <St.PostButton onClick={() => handleDeletePost(post.id)}>삭제</St.PostButton>
-              </St.PostButtonBox>
-            )}
-            <St.PostTitleBox>
-              {!isEdit && (
+      <St.PostWrapper>
+        {posts.map((post) => {
+          return (
+            <div key={post.id}>
+              {currentUser?.uid === post.userId && (
+                <St.PostButtonBox>
+                  <St.PostButton onClick={() => handleUpdatePost(post)}>{isEdit ? '저장' : '수정'}</St.PostButton>
+                  <St.PostButton onClick={() => handleDeletePost(post.id)}>삭제</St.PostButton>
+                </St.PostButtonBox>
+              )}
+              <St.PostTitleBox>
+                {!isEdit && (
+                  <>
+                    <St.PostCategory>{post.category}</St.PostCategory>
+                    <St.PostTitle>{post.title}</St.PostTitle>
+                    <St.PostDate>{dayjs(post.created_at).locale('kr').format(`YYYY-MM-DD HH:mm`)}</St.PostDate>
+                  </>
+                )}
+              </St.PostTitleBox>
+              {isEdit ? (
                 <>
-                  <St.PostTitle>{post.title}</St.PostTitle>
-                  <div>{dayjs(post.created_at).locale('kr').format(`YYYY-MM-DD HH:mm`)}</div>
+                  <WriteContents
+                    title={title}
+                    onChangeTitle={onChangeTitle}
+                    category={category}
+                    onChangeCategory={onChangeCategory}
+                  />
+                  <EditorContents body={body} setBody={setBody} />
+                </>
+              ) : (
+                <>
+                  <St.PostBody>
+                    <Viewer initialValue={post.body} />
+                  </St.PostBody>
+                  <St.PostBottomBox>
+                    <St.PostUserBox>
+                      <St.PostUserProfileImg src={post.profileImg} />
+                      {post.nickname}
+                    </St.PostUserBox>
+                    <St.PostShareLikeBox>
+                      <Likes />
+                      <Share />
+                    </St.PostShareLikeBox>
+                  </St.PostBottomBox>
                 </>
               )}
-            </St.PostTitleBox>
-            {isEdit ? (
-              <>
-                <WriteContents title={title} onChangeTitle={onChangeTitle} />
-                <EditorContents body={body} setBody={setBody} />
-              </>
-            ) : (
-              <>
-                <St.PostBody>
-                  <Viewer initialValue={post.body} />
-                </St.PostBody>
-                <St.PostBottomBox>
-                  <St.PostUserBox>
-                    <St.PostUserProfileImg src={post.profileImg} />
-                    {post.nickname}
-                  </St.PostUserBox>
-                  <St.PostShareLikeBox>
-                    <Share />
-                    <Likes />
-                  </St.PostShareLikeBox>
-                </St.PostBottomBox>
-              </>
-            )}
-          </div>
-        );
-      })}
+            </div>
+          );
+        })}
+      </St.PostWrapper>
     </St.PostContainer>
   );
 };

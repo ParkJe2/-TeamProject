@@ -2,9 +2,9 @@ import { styled } from 'styled-components';
 
 export const St = {
   CommentsTitle: styled.div`
-    font-size: 22px;
+    font-size: 21px;
     font-weight: 700;
-    margin-bottom: 20px;
+    margin: 0 0 20px 30px;
   `,
 
   CommentsAddForm: styled.form`
@@ -15,7 +15,7 @@ export const St = {
   `,
 
   CommentsTextarea: styled.textarea`
-    width: 90%;
+    width: 88%;
     border-radius: 10px;
     margin-right: 20px;
     padding: 10px;
@@ -27,7 +27,7 @@ export const St = {
     background-color: #e24c4b;
     border: none;
     border-radius: 15px;
-    padding: 7px 20px;
+    padding: 6px 20px;
     cursor: pointer;
 
     &:hover {
@@ -38,15 +38,16 @@ export const St = {
   CommentsBox: styled.div`
     position: relative;
     display: flex;
-    border-bottom: 1px solid #989898;
-    padding: 15px 20px;
+    border-bottom: 1px dashed #a4a3a3e4;
+    margin-top: 5px;
+    padding: 10px 25px;
   `,
 
   CommentsUserInfoBox: styled.div`
-    width: 60px;
+    width: 65px;
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 7px;
   `,
 
   CommentsImageBox: styled.div`
@@ -73,8 +74,9 @@ export const St = {
   `,
 
   CommentsDate: styled.div`
+    color: #616161e5;
     font-size: 14px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
   `,
 
   CommentsBody: styled.div`

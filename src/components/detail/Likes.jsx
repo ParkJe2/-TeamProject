@@ -7,7 +7,7 @@ import usePost from 'hooks/usePost';
 import { FaGlassCheers } from 'react-icons/fa';
 import { St } from './ShareLikesStyle';
 
-const Like = () => {
+const Likes = () => {
   const params = useParams();
 
   const currentUser = useUserStore((state) => state.currentUser);
@@ -40,21 +40,21 @@ const Like = () => {
   }
 
   return (
-    <St.LikesContainer>
+    <div>
       {posts.map((post, index) => {
         return (
           <St.LikesButtonBox key={index}>
             {post.likes.includes(currentUser?.uid) ? (
-              <FaGlassCheers size="32" color="#EEA100" onClick={() => handleUpdateLikes(post)} />
+              <FaGlassCheers size="32" color="#EEA100" cursor="pointer" onClick={() => handleUpdateLikes(post)} />
             ) : (
-              <FaGlassCheers size="32" color="#000000" onClick={() => handleUpdateLikes(post)} />
+              <FaGlassCheers size="32" color="#000000" cursor="pointer" onClick={() => handleUpdateLikes(post)} />
             )}
-            {post.likes.length ? post.likes.length : 0}
+            <St.LikesCount>{post.likes.length ? post.likes.length : 0}</St.LikesCount>
           </St.LikesButtonBox>
         );
       })}
-    </St.LikesContainer>
+    </div>
   );
 };
 
-export default Like;
+export default Likes;

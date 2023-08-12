@@ -1,4 +1,3 @@
-import Category from 'pages/Category';
 import { styled } from 'styled-components';
 import { Link } from 'react-router-dom';
 

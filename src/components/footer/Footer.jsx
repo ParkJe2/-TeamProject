@@ -1,30 +1,24 @@
 import React from 'react';
-import { styled } from 'styled-components';
+import { St } from './FooterStyle';
 
 const Footer = () => {
   return (
-    <FooterContain>
-      <div>NBC Project by Team 精神改造</div>
-      <br />
-      <div>GitHub</div>
-      <div>박제이 | 이지영 | 이혜영 | 장혜진 | 최다연</div>
-    </FooterContain>
+    <St.FooterContain>
+      <St.MemberGitHub>
+        <St.GitHub>GitHub</St.GitHub>
+        <St.MemberList>
+          <St.MemberLink href="https://github.com/ParkJe2">박제이</St.MemberLink>|
+          <St.MemberLink href="https://github.com/lizzieFEstudy">이지영</St.MemberLink>|
+          <St.MemberLink href="https://github.com/kkotburi">이혜영</St.MemberLink>|
+          <St.MemberLink href="https://github.com/huizhenz">장혜진</St.MemberLink>|
+          <St.MemberLink href="https://github.com/cheddaryeon">최다연</St.MemberLink>
+        </St.MemberList>
+      </St.MemberGitHub>
+      <St.Copyright>
+        Copyright @<St.TeamName>&nbsp;Team 精神改造</St.TeamName>
+      </St.Copyright>
+    </St.FooterContain>
   );
 };
 
 export default Footer;
-
-const FooterContain = styled.footer`
-  background-color: bisque;
-
-  height: 200px;
-  margin-top: 100px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-
-  /* position: absolute;
-  bottom: 0; */
-`;

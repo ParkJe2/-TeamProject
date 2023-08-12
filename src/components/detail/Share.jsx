@@ -34,17 +34,15 @@ const Share = () => {
   ];
 
   return (
-    <div>
-      <St.ShareDropdown
-        menu={{
-          items
-        }}
-        placement="bottomRight"
-        arrow
-      >
-        <St.ShareIcon />
-      </St.ShareDropdown>
-    </div>
+    <St.ShareDropdown
+      menu={{
+        items
+      }}
+      placement="bottomLeft"
+      arrow
+    >
+      <St.ShareIcon />
+    </St.ShareDropdown>
   );
 };
 

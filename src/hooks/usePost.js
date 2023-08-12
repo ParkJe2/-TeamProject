@@ -1,4 +1,3 @@
-import React from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { addPost, deletePost, updateLikes, updatePost } from 'api/post';
 import { useNavigate } from 'react-router-dom';
@@ -19,7 +18,7 @@ const usePost = () => {
   const deleteMutation = useMutation(deletePost, {
     onSuccess: () => {
       queryClient.invalidateQueries('posts');
-      navigate(-1);
+      navigate(`/`);
     }
   });
 

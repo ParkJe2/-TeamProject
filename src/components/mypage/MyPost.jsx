@@ -4,22 +4,39 @@ import { useQuery } from 'react-query';
 import { getMyPosts, getMyLikes } from 'api/myPost';
 import dayjs from 'dayjs';
 import { FaGlassCheers } from 'react-icons/fa';
+import { getProfile } from 'api/profile';
+
+const PAGE_SIZE = 5;
 
 const MyPost = () => {
   const listRef = useRef();
+  const [myPostsActive, setMyPostsActive] = useState(true);
+  const [likedPostsActive, setLikedPostsActive] = useState(false);
+  const [currentPage, setCurrentPage] = useState(0);
 
-  const { data: myPostsData, isLoading: myPostsLoading, error: myPostsError } = useQuery('posts', getMyPosts);
+  const {
+    data: myPostsData,
+    isLoading: myPostsLoading,
+    error: myPostsError,
+    refetch: refetchMyPosts
+  } = useQuery('posts', getMyPosts, {});
 
   const {
     data: likedPostsData,
     isLoading: likedPostsLoading,
-    error: likedPostsError
+    error: likedPostsError,
+    refetch: refetchLikedPosts
   } = useQuery('likes', getMyLikes, {
     refetchOnWindowFocus: false
   });
 
-  const [myPostsActive, setMyPostsActive] = useState(true);
-  const [likedPostsActive, setLikedPostsActive] = useState(false);
+  const { data: member } = useQuery('members', getProfile, {
+    refetchOnWindowFocus: false
+  });
+
+  const handlePageChange = ({ selected }) => {
+    setCurrentPage(selected);
+  };
 
   const renderPosts = (posts) => {
     if (!posts) {
@@ -43,9 +60,12 @@ const MyPost = () => {
                     <p>{post.likes.length}</p>
                   </St.ListLikeBox>
                   <St.ListProfileImgBox>
-                    <St.ListProfileImg alt="이미지 준비중" src={post.profileImg}></St.ListProfileImg>
+                    <St.ListProfileImg
+                      alt="이미지 준비중"
+                      src={myPostsActive ? member.user_metadata.profileImg : post.profileImg}
+                    ></St.ListProfileImg>
                   </St.ListProfileImgBox>
-                  <St.ListNickname>{post.nickname}</St.ListNickname>
+                  <St.ListNickname>{myPostsActive ? member.user_metadata.nickname : post.nickname}</St.ListNickname>
                 </St.ListWriterWrap>
               </St.Lists>
             </St.PostLink>
@@ -58,19 +78,46 @@ const MyPost = () => {
   const handleMyPostsClick = () => {
     setMyPostsActive(true);
     setLikedPostsActive(false);
+    refetchMyPosts();
   };
 
   const handleMyLikedPostsClick = () => {
     setMyPostsActive(false);
     setLikedPostsActive(true);
+    refetchLikedPosts();
   };
 
-  let content = null;
-  if (myPostsActive) {
-    content = renderPosts(myPostsData);
-  } else if (likedPostsActive) {
-    content = renderPosts(likedPostsData);
-  }
+  const renderContent = () => {
+    let postsData, pageCount;
+
+    if (myPostsActive) {
+      postsData = myPostsData;
+    } else if (likedPostsActive) {
+      postsData = likedPostsData;
+    }
+
+    if (postsData) {
+      const paginatedPosts = postsData.slice(currentPage * PAGE_SIZE, (currentPage + 1) * PAGE_SIZE);
+      pageCount = Math.ceil(postsData.length / PAGE_SIZE);
+      return (
+        <div>
+          {renderPosts(paginatedPosts, member)}
+          <St.Paginate
+            previousLabel={'<'}
+            nextLabel={'>'}
+            breakLabel={'...'}
+            pageCount={pageCount}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            onPageChange={handlePageChange}
+            activeClassName={'active'}
+          />
+        </div>
+      );
+    }
+
+    return <div>No posts available.</div>;
+  };
 
   if (myPostsLoading || likedPostsLoading) {
     return <div>Loading...</div>;
@@ -88,7 +135,7 @@ const MyPost = () => {
         </St.ListBtn>
         <St.ListBtn onClick={handleMyLikedPostsClick}>좋아요 목록</St.ListBtn>
       </St.PostList>
-      <St.ListBox ref={listRef}>{content}</St.ListBox>
+      <St.ListBox ref={listRef}>{renderContent()}</St.ListBox>
     </St.MyPostContainer>
   );
 };
